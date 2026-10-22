@@ -1,28 +1,51 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<title>עיריית כפר סבא - מערכת מלווים</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>עיריית כפר סבא - חיפוש הסעות</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 
 <body>
 
-<header>
-    <h1>🏛️ עיריית כפר סבא</h1>
-    <h2>מערכת חיפוש נהגים ומלווים</h2>
-</header>
+    <header>
+        <h1>🏛️ עיריית כפר סבא</h1>
+        <h2>מערכת חיפוש הסעות</h2>
+    </header>
 
-<div class="search-box">
-<input id="search" placeholder="🔍 חיפוש לפי שם, טלפון, מוסד או מסלול...">
-</div>
 
-<div id="count"></div>
+    <div class="search-container">
 
-<div id="results"></div>
+        <input 
+        id="search" 
+        type="text"
+        placeholder="🔍 חיפוש לפי שם, טלפון, נהג, מלווה או מסלול...">
+
+    </div>
+
+
+    <div id="count"></div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <tbody id="table"></tbody>
+
+        </table>
+
+    </div>
+
 
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
