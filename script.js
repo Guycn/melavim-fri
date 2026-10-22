@@ -6,32 +6,38 @@ fetch("data.csv")
 
     data = text.split("\n").map(row => row.split(","));
 
-    showTable(data);
+    showResults(data);
 
 });
 
 
-function showTable(rows) {
+function showResults(rows) {
 
-    let table = document.getElementById("table");
+    let results = document.getElementById("results");
+    let count = document.getElementById("count");
 
-    table.innerHTML = "";
+    results.innerHTML = "";
 
-    rows.forEach((row, index) => {
+    count.innerHTML = "נמצאו " + (rows.length - 1) + " תוצאות";
 
-        let tr = document.createElement("tr");
+    rows.slice(1).forEach(row => {
 
-        row.forEach(cell => {
+        if(row.join("").trim() === "") return;
 
-            let td = document.createElement(index === 0 ? "th" : "td");
+        let card = document.createElement("div");
+        card.className = "card";
 
-            td.textContent = cell;
+        row.forEach((cell, index) => {
 
-            tr.appendChild(td);
+            let line = document.createElement("div");
+
+            line.textContent = cell;
+
+            card.appendChild(line);
 
         });
 
-        table.appendChild(tr);
+        results.appendChild(card);
 
     });
 
@@ -40,12 +46,12 @@ function showTable(rows) {
 
 document.getElementById("search").addEventListener("input", function(){
 
-    let search = this.value.toLowerCase();
+    let text = this.value.toLowerCase();
 
     let filtered = data.filter(row =>
-        row.join(" ").toLowerCase().includes(search)
+        row.join(" ").toLowerCase().includes(text)
     );
 
-    showTable(filtered);
+    showResults(filtered);
 
 });
