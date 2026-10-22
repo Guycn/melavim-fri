@@ -1,27 +1,55 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
+let data = [];
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+fetch("data.csv")
+.then(response => response.text())
+.then(text => {
 
-<title>חיפוש הסעות - עיריית כפר סבא</title>
+    data = text.split("\n");
 
-<link rel="stylesheet" href="style.css">
-</head>
+    show(data);
 
-<body>
-
-<h1>🏛️ עיריית כפר סבא</h1>
-<h2>מערכת חיפוש הסעות</h2>
-
-<input id="search" placeholder="🔍 חיפוש...">
-
-<div id="results"></div>
+});
 
 
-<script src="script.js"></script>
+function show(rows){
 
-</body>
+    let results = document.getElementById("results");
 
-</html>
+    results.innerHTML="";
+
+
+    rows.forEach(row=>{
+
+        if(row.trim()=="") return;
+
+
+        let div=document.createElement("div");
+
+        div.className="row";
+
+        div.textContent=row;
+
+        results.appendChild(div);
+
+    });
+
+}
+
+
+
+document.getElementById("search")
+.addEventListener("input",function(){
+
+    let value=this.value.toLowerCase();
+
+
+    let filtered=data.filter(row=>
+
+        row.toLowerCase().includes(value)
+
+    );
+
+
+    show(filtered);
+
+});
