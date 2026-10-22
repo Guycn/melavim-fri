@@ -1,12 +1,12 @@
-let data = [];
+let allData = [];
 
 fetch("data.csv")
 .then(response => response.text())
-.then(text => {
+.then(data => {
 
-    data = parseCSV(text);
+    allData = parseCSV(data);
 
-    showResults(data.slice(2));
+    showTable(allData);
 
 });
 
@@ -16,23 +16,21 @@ function parseCSV(text) {
     let rows = [];
     let row = [];
     let cell = "";
-    let insideQuotes = false;
+    let quote = false;
 
-    for (let i = 0; i < text.length; i++) {
-
-        let char = text[i];
+    for (let char of text) {
 
         if (char === '"') {
-            insideQuotes = !insideQuotes;
+            quote = !quote;
         }
 
-        else if (char === "," && !insideQuotes) {
-            row.push(cell.trim());
+        else if (char === "," && !quote) {
+            row.push(cell);
             cell = "";
         }
 
-        else if (char === "\n" && !insideQuotes) {
-            row.push(cell.trim());
+        else if (char === "\n" && !quote) {
+            row.push(cell);
             rows.push(row);
             row = [];
             cell = "";
@@ -43,7 +41,7 @@ function parseCSV(text) {
         }
     }
 
-    row.push(cell.trim());
+    row.push(cell);
     rows.push(row);
 
     return rows;
@@ -51,73 +49,30 @@ function parseCSV(text) {
 
 
 
-function showResults(rows) {
+function showTable(data) {
 
-    let results = document.getElementById("results");
-    let count = document.getElementById("count");
+    let table = document.getElementById("table");
 
-    results.innerHTML = "";
+    if (!table) return;
 
-    count.innerHTML = 
-    "נמצאו " + rows.length + " נסיעות";
+    table.innerHTML = "";
 
 
-    rows.forEach((row,index)=>{
+    data.forEach((row, index) => {
 
+        let tr = document.createElement("tr");
 
-        let card = document.createElement("div");
+        row.forEach(cell => {
 
-        card.className = "card";
+            let td = document.createElement(index === 1 ? "th" : "td");
 
+            td.textContent = cell;
 
-        card.innerHTML = `
+            tr.appendChild(td);
 
-        <div class="trip-title">
-        🚍 נסיעה ${index+1}
-        </div>
+        });
 
-
-        <div class="line">
-        🕒 <b>שעה:</b> ${row[2] || ""}
-        </div>
-
-
-        <div class="line">
-        🔄 <b>סוג:</b> ${row[3] || ""}
-        </div>
-
-
-        <div class="line">
-        🚐 <b>רכב:</b> ${row[1] || ""}
-        </div>
-
-
-        <div class="route">
-        🏫 <b>מסלול:</b><br>
-        ${row[4] || ""}
-        </div>
-
-
-        <div class="line">
-        👨‍✈️ <b>נהג:</b><br>
-        ${row[5] || ""}
-        </div>
-
-
-        <div class="escort">
-        👤 <b>מלווה:</b><br>
-        ${row[6] || ""}
-        </div>
-
-
-        <div class="note">
-        📝 ${row[7] || ""}
-        </div>
-
-        `;
-
-
-        results.appendChild(card);
+        table.appendChild(tr);
 
     });
 
@@ -125,24 +80,21 @@ function showResults(rows) {
 
 
 
-
 document.getElementById("search")
-.addEventListener("input",function(){
+.addEventListener("input", function(){
+
+    let value = this.value.toLowerCase();
 
 
-    let search = this.value.toLowerCase();
+    let filtered = allData.filter(row =>
 
-
-    let filtered = data.slice(2).filter(row=>{
-
-        return row.join(" ")
+        row.join(" ")
         .toLowerCase()
-        .includes(search);
+        .includes(value)
 
-    });
+    );
 
 
-    showResults(filtered);
-
+    showTable(filtered);
 
 });
