@@ -1,48 +1,116 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    margin: 30px;
+* {
+    box-sizing: border-box;
 }
 
-h1 {
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f2f8f5, #ffffff);
+    color: #333;
+}
+
+/* אזור הכותרת */
+header {
+    background: linear-gradient(135deg, #006b5b, #00a878);
+    color: white;
     text-align: center;
+    padding: 35px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+header h1 {
+    margin: 0;
     font-size: 42px;
-    margin-bottom: 25px;
+}
+
+header h2 {
+    margin-top: 10px;
+    font-weight: normal;
+}
+
+
+/* אזור החיפוש */
+.search-box {
+    max-width: 900px;
+    margin: 35px auto 15px;
+    padding: 0 20px;
 }
 
 #search {
     width: 100%;
-    max-width: 900px;
-    display: block;
-    margin: 20px auto;
+    padding: 22px 25px;
+    font-size: 26px;
+    border-radius: 20px;
+    border: 3px solid #00a878;
+    outline: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+#search:focus {
+    border-color: #006b5b;
+}
+
+
+/* מספר תוצאות */
+#count {
+    text-align: center;
+    font-size: 20px;
+    margin: 20px;
+    color: #006b5b;
+}
+
+
+/* אזור התוצאות */
+#results {
+    max-width: 1000px;
+    margin: auto;
     padding: 20px;
-    font-size: 30px;
-    border: 3px solid #0078d7;
-    border-radius: 12px;
-    box-sizing: border-box;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+
+/* כרטיס תוצאה */
+.card {
     background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    border-right: 8px solid #00a878;
+    transition: 0.3s;
 }
 
-th {
-    background: #0078d7;
-    color: white;
-    padding: 10px;
+.card:hover {
+    transform: translateY(-4px);
 }
 
-td {
-    padding: 10px;
+
+.card div {
+    font-size: 20px;
+    margin: 10px 0;
 }
 
-td, th {
-    border: 1px solid #ccc;
-    text-align: right;
+
+/* טלפון */
+.phone {
+    color: #006b5b;
+    font-weight: bold;
 }
 
-לאחר מכן:
-1. שמור (⌘ + S).
-2. רענן את הדפדפן (⌘ + R).
+
+/* התאמה לנייד */
+@media(max-width:600px){
+
+header h1 {
+    font-size: 30px;
+}
+
+#search {
+    font-size: 20px;
+    padding: 18px;
+}
+
+.card div {
+    font-size: 17px;
+}
+
+}
