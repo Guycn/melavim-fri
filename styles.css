@@ -121,3 +121,21 @@ header h1 {
 .card div {
     white-space: nowrap;
 }
+
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #006b5b;
+    margin-bottom: 15px;
+}
+
+.escort {
+    background: #e8f7f1;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 22px !important;
+}
+
+.card div {
+    margin: 12px 0;
+}
