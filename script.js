@@ -61,44 +61,61 @@ function showResults(rows) {
     count.innerHTML = "נמצאו " + rows.length + " נסיעות";
 
 
-    rows.forEach(row => {
+    rows.forEach((row, index) => {
 
         let card = document.createElement("div");
         card.className = "card";
 
 
         card.innerHTML = `
-        <div class="title">🚍 ${row[3] || ""}</div>
 
-        <div>
-        🕒 <b>שעה:</b> ${row[2] || ""}
+        <div class="trip-number">
+        🚍 נסיעה ${index + 1}
         </div>
 
         <div>
-        🚐 <b>רכב:</b> ${row[1] || ""}
+        🕒 <b>שעה:</b> ${row[2]}
         </div>
 
         <div>
-        🏫 <b>מסלול:</b> ${row[4] || ""}
+        🔄 <b>סוג:</b> ${row[3]}
         </div>
 
         <div>
-        👨‍✈️ <b>נהג:</b> ${row[5] || ""}
+        🚐 <b>רכב:</b> ${row[1]}
+        </div>
+
+        <hr>
+
+        <div class="route">
+        🏫 <b>מסלול:</b><br>
+        ${row[4]}
+        </div>
+
+        <hr>
+
+        <div>
+        👨‍✈️ <b>נהג:</b><br>
+        ${row[5]}
         </div>
 
         <div class="escort">
-        👤 <b>מלווה:</b> ${row[6] || ""}
+        👤 <b>מלווה:</b><br>
+        ${row[6]}
         </div>
 
-        <div>
-        📝 <b>הערות:</b> ${row[7] || ""}
+        <div class="notes">
+        📝 ${row[7] || ""}
         </div>
+
         `;
 
 
         results.appendChild(card);
 
     });
+
+}
 
 }
 
