@@ -2,17 +2,25 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>חיפוש מלווים</title>
+<title>עיריית כפר סבא - מערכת מלווים</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>מערכת חיפוש מלווים</h1>
+<header>
+    <h1>🏛️ עיריית כפר סבא</h1>
+    <h2>מערכת חיפוש נהגים ומלווים</h2>
+</header>
 
-<input type="text" id="search" placeholder="🔍 חפש...">
+<div class="search-box">
+<input id="search" placeholder="🔍 חיפוש לפי שם, טלפון, מוסד או מסלול...">
+</div>
 
-<table id="table"></table>
+<div id="count"></div>
+
+<div id="results"></div>
+
 
 <script src="script.js"></script>
 
