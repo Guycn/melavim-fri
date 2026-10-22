@@ -1,42 +1,39 @@
 let data = [];
 let headers = [];
 
-// טעינת קובץ הנתונים
 fetch("data.csv")
 .then(response => response.text())
 .then(text => {
 
     data = parseCSV(text);
 
-    headers = data[1]; // שורת הכותרות האמיתית
+    headers = data[1];
 
     showResults(data.slice(2));
 
 });
 
 
-// מפענח CSV עם מרכאות ופסיקים
+// קריאת CSV כולל מרכאות ופסיקים בתוך טקסט
 function parseCSV(text) {
 
     let rows = [];
     let row = [];
     let cell = "";
-    let insideQuotes = false;
+    let quotes = false;
 
-    for (let i = 0; i < text.length; i++) {
-
-        let char = text[i];
+    for (let char of text) {
 
         if (char === '"') {
-            insideQuotes = !insideQuotes;
+            quotes = !quotes;
         }
 
-        else if (char === "," && !insideQuotes) {
+        else if (char === "," && !quotes) {
             row.push(cell);
             cell = "";
         }
 
-        else if (char === "\n" && !insideQuotes) {
+        else if (char === "\n" && !quotes) {
             row.push(cell);
             rows.push(row);
             row = [];
@@ -55,7 +52,7 @@ function parseCSV(text) {
 }
 
 
-// הצגת כרטיסים
+// הצגת תוצאות
 function showResults(rows) {
 
     let results = document.getElementById("results");
@@ -72,16 +69,16 @@ function showResults(rows) {
         card.className = "card";
 
 
-        row.forEach((value, index) => {
+        row.forEach((value,index)=>{
 
-            if(value.trim() !== "") {
+            if(value.trim()) {
 
-                let line = document.createElement("div");
+                let div = document.createElement("div");
 
-                line.textContent =
+                div.textContent =
                 headers[index] + ": " + value;
 
-                card.appendChild(line);
+                card.appendChild(div);
             }
 
         });
@@ -90,17 +87,16 @@ function showResults(rows) {
         results.appendChild(card);
 
     });
-
 }
 
 
 // חיפוש
 document.getElementById("search").addEventListener("input", function(){
 
-    let search = this.value.toLowerCase();
+    let text = this.value.toLowerCase();
 
     let filtered = data.slice(2).filter(row =>
-        row.join(" ").toLowerCase().includes(search)
+        row.join(" ").toLowerCase().includes(text)
     );
 
     showResults(filtered);
