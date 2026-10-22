@@ -1,13 +1,10 @@
 let data = [];
-let headers = [];
 
 fetch("data.csv")
 .then(response => response.text())
 .then(text => {
 
     data = parseCSV(text);
-
-    headers = data[1];
 
     showResults(data.slice(2));
 
@@ -19,21 +16,23 @@ function parseCSV(text) {
     let rows = [];
     let row = [];
     let cell = "";
-    let quotes = false;
+    let insideQuotes = false;
 
-    for (let char of text) {
+    for (let i = 0; i < text.length; i++) {
+
+        let char = text[i];
 
         if (char === '"') {
-            quotes = !quotes;
+            insideQuotes = !insideQuotes;
         }
 
-        else if (char === "," && !quotes) {
-            row.push(cell);
+        else if (char === "," && !insideQuotes) {
+            row.push(cell.trim());
             cell = "";
         }
 
-        else if (char === "\n" && !quotes) {
-            row.push(cell);
+        else if (char === "\n" && !insideQuotes) {
+            row.push(cell.trim());
             rows.push(row);
             row = [];
             cell = "";
@@ -44,11 +43,12 @@ function parseCSV(text) {
         }
     }
 
-    row.push(cell);
+    row.push(cell.trim());
     rows.push(row);
 
     return rows;
 }
+
 
 
 function showResults(rows) {
@@ -58,53 +58,59 @@ function showResults(rows) {
 
     results.innerHTML = "";
 
-    count.innerHTML = "נמצאו " + rows.length + " נסיעות";
+    count.innerHTML = 
+    "נמצאו " + rows.length + " נסיעות";
 
 
-    rows.forEach((row, index) => {
+    rows.forEach((row,index)=>{
+
 
         let card = document.createElement("div");
+
         card.className = "card";
 
 
         card.innerHTML = `
 
-        <div class="trip-number">
-        🚍 נסיעה ${index + 1}
+        <div class="trip-title">
+        🚍 נסיעה ${index+1}
         </div>
 
-        <div>
-        🕒 <b>שעה:</b> ${row[2]}
+
+        <div class="line">
+        🕒 <b>שעה:</b> ${row[2] || ""}
         </div>
 
-        <div>
-        🔄 <b>סוג:</b> ${row[3]}
+
+        <div class="line">
+        🔄 <b>סוג:</b> ${row[3] || ""}
         </div>
 
-        <div>
-        🚐 <b>רכב:</b> ${row[1]}
+
+        <div class="line">
+        🚐 <b>רכב:</b> ${row[1] || ""}
         </div>
 
-        <hr>
 
         <div class="route">
         🏫 <b>מסלול:</b><br>
-        ${row[4]}
+        ${row[4] || ""}
         </div>
 
-        <hr>
 
-        <div>
+        <div class="line">
         👨‍✈️ <b>נהג:</b><br>
-        ${row[5]}
+        ${row[5] || ""}
         </div>
+
 
         <div class="escort">
         👤 <b>מלווה:</b><br>
-        ${row[6]}
+        ${row[6] || ""}
         </div>
 
-        <div class="notes">
+
+        <div class="note">
         📝 ${row[7] || ""}
         </div>
 
@@ -117,17 +123,26 @@ function showResults(rows) {
 
 }
 
-}
 
 
-document.getElementById("search").addEventListener("input", function(){
 
-    let text = this.value.toLowerCase();
+document.getElementById("search")
+.addEventListener("input",function(){
 
-    let filtered = data.slice(2).filter(row =>
-        row.join(" ").toLowerCase().includes(text)
-    );
+
+    let search = this.value.toLowerCase();
+
+
+    let filtered = data.slice(2).filter(row=>{
+
+        return row.join(" ")
+        .toLowerCase()
+        .includes(search);
+
+    });
+
 
     showResults(filtered);
+
 
 });
