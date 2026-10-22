@@ -14,7 +14,6 @@ fetch("data.csv")
 });
 
 
-// קריאת CSV כולל מרכאות ופסיקים בתוך טקסט
 function parseCSV(text) {
 
     let rows = [];
@@ -52,7 +51,6 @@ function parseCSV(text) {
 }
 
 
-// הצגת תוצאות
 function showResults(rows) {
 
     let results = document.getElementById("results");
@@ -69,128 +67,42 @@ function showResults(rows) {
         card.className = "card";
 
 
-        row.forEach((value,index)=>{
+        card.innerHTML = `
+        <div class="title">🚍 ${row[3] || ""}</div>
 
-            if(value.trim()) {
+        <div>
+        🕒 <b>שעה:</b> ${row[2] || ""}
+        </div>
 
-                let div = document.createElement("div");
+        <div>
+        🚐 <b>רכב:</b> ${row[1] || ""}
+        </div>
 
-let data = [];
-let headers = [];
+        <div>
+        🏫 <b>מסלול:</b> ${row[4] || ""}
+        </div>
 
-fetch("data.csv")
-.then(response => response.text())
-.then(text => {
+        <div>
+        👨‍✈️ <b>נהג:</b> ${row[5] || ""}
+        </div>
 
-    data = parseCSV(text);
+        <div class="escort">
+        👤 <b>מלווה:</b> ${row[6] || ""}
+        </div>
 
-    headers = data[1];
-
-    showResults(data.slice(2));
-
-});
-
-
-// קריאת CSV כולל מרכאות ופסיקים בתוך טקסט
-function parseCSV(text) {
-
-    let rows = [];
-    let row = [];
-    let cell = "";
-    let quotes = false;
-
-    for (let char of text) {
-
-        if (char === '"') {
-            quotes = !quotes;
-        }
-
-        else if (char === "," && !quotes) {
-            row.push(cell);
-            cell = "";
-        }
-
-        else if (char === "\n" && !quotes) {
-            row.push(cell);
-            rows.push(row);
-            row = [];
-            cell = "";
-        }
-
-        else {
-            cell += char;
-        }
-    }
-
-    row.push(cell);
-    rows.push(row);
-
-    return rows;
-}
-
-
-// הצגת תוצאות
-function showResults(rows) {
-
-    let results = document.getElementById("results");
-    let count = document.getElementById("count");
-
-    results.innerHTML = "";
-
-    count.innerHTML = "נמצאו " + rows.length + " נסיעות";
-
-
-    rows.forEach(row => {
-
-        let card = document.createElement("div");
-        card.className = "card";
-
-
-        row.forEach((value,index)=>{
-
-            if(value.trim()) {
-
-                let div = document.createElement("div");
-
-                div.textContent =
-                headers[index] + ": " + value;
-
-                card.appendChild(div);
-            }
-
-        });
+        <div>
+        📝 <b>הערות:</b> ${row[7] || ""}
+        </div>
+        `;
 
 
         results.appendChild(card);
 
     });
+
 }
 
 
-// חיפוש
-document.getElementById("search").addEventListener("input", function(){
-
-    let text = this.value.toLowerCase();
-
-    let filtered = data.slice(2).filter(row =>
-        row.join(" ").toLowerCase().includes(text)
-    );
-
-    showResults(filtered);
-
-});
-            }
-
-        });
-
-
-        results.appendChild(card);
-
-    });
-}
-
-
-// חיפוש
 document.getElementById("search").addEventListener("input", function(){
 
     let text = this.value.toLowerCase();
