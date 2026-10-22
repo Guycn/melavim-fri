@@ -4,52 +4,48 @@ fetch("data.csv")
 .then(response => response.text())
 .then(text => {
 
-    data = text.split("\n");
+    data = text.split("\n").map(row => row.split(","));
 
-    show(data);
+    showTable(data);
 
 });
 
 
-function show(rows){
+function showTable(rows) {
 
-    let results = document.getElementById("results");
+    let table = document.getElementById("table");
 
-    results.innerHTML="";
+    table.innerHTML = "";
 
+    rows.forEach((row, index) => {
 
-    rows.forEach(row=>{
+        let tr = document.createElement("tr");
 
-        if(row.trim()=="") return;
+        row.forEach(cell => {
 
+            let td = document.createElement(index === 0 ? "th" : "td");
 
-        let div=document.createElement("div");
+            td.textContent = cell;
 
-        div.className="row";
+            tr.appendChild(td);
 
-        div.textContent=row;
+        });
 
-        results.appendChild(div);
+        table.appendChild(tr);
 
     });
 
 }
 
 
+document.getElementById("search").addEventListener("input", function(){
 
-document.getElementById("search")
-.addEventListener("input",function(){
+    let search = this.value.toLowerCase();
 
-    let value=this.value.toLowerCase();
-
-
-    let filtered=data.filter(row=>
-
-        row.toLowerCase().includes(value)
-
+    let filtered = data.filter(row =>
+        row.join(" ").toLowerCase().includes(search)
     );
 
-
-    show(filtered);
+    showTable(filtered);
 
 });
