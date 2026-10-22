@@ -1,28 +1,39 @@
-body {
-    font-family: Arial;
-    direction: rtl;
-    margin: 20px;
+body{
+    font-family:Arial;
+    direction:rtl;
+    margin:30px;
+    background:#f5f5f5;
 }
 
-#search {
-    width: 90%;
-    padding: 15px;
-    font-size: 22px;
-    margin-bottom: 20px;
+
+h1{
+    text-align:center;
+    color:#006b5b;
 }
 
-table {
-    width:100%;
-    border-collapse:collapse;
+
+h2{
+    text-align:center;
 }
 
-td, th {
-    border:1px solid #ccc;
-    padding:10px;
-    text-align:right;
+
+#search{
+
+    width:90%;
+    padding:20px;
+    font-size:25px;
+    display:block;
+    margin:30px auto;
+
 }
 
-th {
-    background:#006b5b;
-    color:white;
+
+.row{
+
+    background:white;
+    padding:15px;
+    margin:10px;
+    border-radius:10px;
+    box-shadow:0 2px 5px #ccc;
+
 }
