@@ -114,3 +114,10 @@ header h1 {
 }
 
 }
+.card {
+    line-height: 1.6;
+}
+
+.card div {
+    white-space: nowrap;
+}
